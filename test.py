@@ -3,7 +3,7 @@ import time
 
 # don't forget to change the serial port to suit
 # port number of the arduino
-board = pyfirmata.Arduino('/dev/ttyACM0')
+board = pyfirmata.Arduino(r'/COM7 (Arduino/Genuino Uno)')
 
 # start an iterator thread so
 # serial buffer doesn't overflow
