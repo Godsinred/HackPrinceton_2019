@@ -21,11 +21,11 @@ plt.style.use('seaborn-pastel')
 
 
 angleList = []
-letters = [(0,1),(0,100),(50,100),(50,50),(0,50),(50,50),(50,0),(75,0),(75,100),(125,100),(125,50),(75,50),(125,50),(125,0), (150,0), (150,50), (150,100), (200,100)]
+letters = [(0,0),(0,20),(10,20),(10,10),(0,10),(10,10),(10,0),(15,0),(15,20),(25,20),(25,10),(15,10),(25,10),(25,0)]
 numFrames = len(letters)
 
 fig = plt.figure()
-ax = plt.axes(xlim=(-10, (numFrames/7)*75), ylim=(-100, 150))
+ax = plt.axes(xlim=(-10, 100), ylim=(-100, 50))
 ax.set_title('Drawing arm')
 ax.set_aspect('equal', 'box')
 line, = ax.plot([], [], lw=3)
@@ -49,21 +49,21 @@ def animate2(i):
 
     x = endpointList[i][0]
     y = endpointList[i][1]
-
+     
     [th1, th2, x_j, y_j] = invkin2(x, y, DEGREES)
 
     angleList.append((th1, th2))
-
+     
     x_val = [n[0] for n in endpointList[:i+1]]
     y_val = [n[1] for n in endpointList[:i+1]]
 
     plt.plot(x_val, y_val,'m', zorder = 1)
 
     plotDot()
-
+    
     xd = [0, x_j,x ]
     yd = [0, y_j,y ]
-
+    
     line.set_data(xd, yd)
     return line,
 
@@ -82,7 +82,7 @@ def invkin2(x, y, angleMode=DEGREES):
                 degrees/radians. Default is degrees
     output:
     th1 - angle of the first link w.r.t ground
-    th2 - angle of the second link w.r.t the first
+    th2 - angle of the second link w.r.t the first 
     """
 
     #stuff for calculating th2
@@ -92,7 +92,7 @@ def invkin2(x, y, angleMode=DEGREES):
     term1 = ((1 - term2**2)**0.5)*-1
     #calculate th2
     th2 = math.atan2(term1, term2)
-    #optional line. Comment this one out if you
+    #optional line. Comment this one out if you 
     #notice any problems
     th2 = -1*th2
 
@@ -111,24 +111,24 @@ def invkin2(x, y, angleMode=DEGREES):
         return th1, th2, x_j, y_j
     else:
         return math.degrees(th1), math.degrees(th2), x_j, y_j
-
-
+    
+         
 def plotDot():
     xdot = []
     ydot = []
 
-    rangeVal = int(numFrames/7)*75
-
+   # rangeVal = int(numFrames/7)*75
+    
     for n in range (10):
-        xdot.append((n+1)*75 - 12.5)
+        xdot.append(n*15 -2.5)
         ydot.append(0)
 
-    plt.scatter(xdot, ydot, c='b', s=500, zorder = 2)
+    plt.scatter(xdot, ydot, c='w', s=45, zorder = 2)
 
 if __name__ == "__main__":
-
-
+   
+    
     anim = FuncAnimation(fig, animate2, init_func=init,
                          frames =numFrames, interval=100, blit=True)
-    anim.save('arm.html', writer='imagemagick')
+    anim.save('arm.gif', writer='imagemagick')
     print(angleList)
