@@ -86,26 +86,28 @@ letter_coords = {
 all_cords = []
 off_set = 10
 ### get list of x,y cords for the letter here
-def get_coords(sentence, off_set=10):
+def get_coords(sentence, pixel_width=10):
     # x start position of the current letter being executed
     for char_num, letter in enumerate(sentence.upper()):
+        print(letter)
         ### get list of x,y cords for the letter here
         coords = letter_coords[letter]
 
-        off_set_coords = []
+        # off_set_coords = []
 
         for x, y in coords:
-            x = x * off_set + char_num * off_set
-            y = y * off_set + char_num * off_set
+            x = x * pixel_width + char_num * pixel_width * 2
+            y = y * pixel_width
             # off_set_coords.append([x,y])
             all_cords.append([x,y])
 
+            print([x,y])
         # all_cords.append(off_set_coords)
-
-        print(off_set_coords)
 
 
 get_coords(sentence, 10)
+
+print(all_cords)
 
 
 ### Kasia code here ###
@@ -118,12 +120,12 @@ plt.style.use('seaborn-pastel')
 
 
 angleList = []
-letters = [(0,1),(0,100),(50,100),(50,50),(0,50),(50,50),(50,0),(75,0),(75,100),(125,100),(125,50),(75,50),(125,50),(125,0), (135,135)]
-# letters =
+# letters = [(0,0),(0,20),(10,20),(10,10),(0,10),(10,10),(10,0),(15,0),(15,20),(25,20),(25,10),(15,10),(25,10),(25,0)]
+letters = all_cords
 numFrames = len(letters)
 
 fig = plt.figure()
-ax = plt.axes(xlim=(-10, (numFrames/7)*75), ylim=(-100, 150))
+ax = plt.axes(xlim=(-10, 170), ylim=(-100, 50))
 ax.set_title('Drawing arm')
 ax.set_aspect('equal', 'box')
 line, = ax.plot([], [], lw=3)
@@ -215,13 +217,14 @@ def plotDot():
     xdot = []
     ydot = []
 
-    rangeVal = int(numFrames/7)*75
+   # rangeVal = int(numFrames/7)*75
 
     for n in range (10):
-        xdot.append((n+1)*75 - 12.5)
+        xdot.append(n*15 -2.5)
         ydot.append(0)
 
-    plt.scatter(xdot, ydot, c='w', s=900, zorder = 2)
+    plt.scatter(xdot, ydot, c='w', s=45, zorder = 2)
+
 
 anim = FuncAnimation(fig, animate2, init_func=init,
                      frames =numFrames, interval=100, blit=True)
