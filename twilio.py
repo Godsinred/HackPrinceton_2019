@@ -46,26 +46,55 @@ def transcribe_file(speech_file):
 sentence = transcribe_file('/Users/jonathan/Desktop/test.wav')
 
 ##############################
-### TEXT TO DEGREES HERE #####
+### TEXT TO DEGREES HERE ##### also put everything else in the same for loop
 ##############################
+
+# X, Y
+letter_coords = {
+    'A' : [(0,0), (0,2), (1,2), (1,1), (0,1), (1,1), (1,0)],
+    'B' : [(0,0), (0,1), (0,2), (1,2), (1,1), (0,1), (1,1), (1,0), (0,0)],
+    'C' : [(1,0), (0,0), (0,1), (0,2), (1,2)],
+    'D' : [(0,0), (0,1), (0,2), (1,2), (1,1), (1,0), (0,0)],
+    'E' : [(1,0), (0,0), (0,1), (0.5,1), (0,1), (0,2), (1,2)],
+    'F' : [(0,0), (0,1), (0.5, 1), (0,1), (0,2), (1,2)],
+    'G' : [(1,2), (0,2), (0,1), (0,0), (1,0), (1,1), (0.5,1)],
+    'H' : [(0,0), (0,2), (0,1), (1,1), (1,2), (1,0)],
+    'I' : [(0,2), (1,2), (0.5,2), (0.5,0), (0,0), (0.5,0), (1,0)],
+    'J' : [(0,2), (1,2), (0.5,2), (0.5,0), (0,0), (0,0.5)],
+    'K' : [(0,2), (0,0), (0,1), (1,2), (0,1), (1,0)],
+    'L' : [(0,2), (0,0), (1,0)],
+    'M' : [(0,0), (0,2), (0.5,1), (1,2), (1,0)],
+    'N' : [(0,0), (0,2), (1,0), (1,2)],
+    'O' : [(0,0), (0,2), (1,2), (1,0), (0,0)],
+    'P' : [(0,0), (0,2), (1,2), (1,1), (0,1)],
+    'Q' : [(1,0), (1,2), (0,2), (0,1), (1,1)],
+    'R' : [(0,0), (0,2), (1,2), (1,1), (0,1), (1,0)],
+    'S' : [(1,2), (0,2), (0,1), (1,1), (1,0), (0,0)],
+    'T' : [(0,2), (1,2), (0.5,2), (0.5,0)],
+    'U' : [(0,2), (0,0), (1,0, (1,2)],
+    'V' : [(0,2), (0.5,0), (1,2)],
+    'W' : [(0,2), (0,0), (0.5,1), (1,0), (1,2)],
+    'X' : [(0,2), (1,0), (0.5,1), (1,2), (0.5,1), (0,0)],
+    'Y' : [(0,2), (0.5,1), (1,2), (0.5,1), (0.5,0)],
+    'Z' : [(0,2), (1,2), (0,0), (1,0)]
+}
 # x start position of the current letter being executed
-x_position = 0
-for letter in sentence:
+for char_num, letter in enum(sentence):
     # we onlt want to print out characters and skip the rest
-    if letter is ' ':
+    if letter == ' ':
         continue
 
-        ### get list of x,y cords for the letter here
-        coords_list = get_coords(letter)
+    ### get list of x,y cords for the letter here
+    coords_list = get_coords(letter)
 
-        ### get set of degrees here (all movements for the arm)
-        degrees_list = get_degrees(coords_list)
+    ### get set of degrees here (all movements for the arm)
+    degrees_list = get_degrees(coords_list)
 
-        ### do simmulation here or in the get degrees function
-        
+    ### do simmulation here or in the get degrees function
 
-        ### move arduino arm
-        move_arm(degrees_list)
+
+    ### move arduino arm
+    move_arm(degrees_list)
 
 ### get list of x,y cords for the letter here
 def get_coords(letter):
