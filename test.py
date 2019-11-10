@@ -16,7 +16,10 @@ pin9 = board.get_pin('d:9:s')
 def move_servo(a):
     pin9.write(a)
 
-move_servo(90)
+degrees = [123,345,562,67,2,4657,7,234]
+for deg in degrees:
+    move_servo(deg)
+
 print('end of program')
 
 # board.digital[10].mode = pyfirmata.INPUT

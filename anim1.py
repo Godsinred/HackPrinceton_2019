@@ -34,20 +34,20 @@ def animate2(i):
     x = i
     y = 100
     [th1, th2, x_j, y_j] = invkin2(x, y, DEGREES)
-    
+
     xd = [0, x_j, x]
     yd = [0, y_j, y]
-    
+
     line.set_data(xd, yd)
-    plt.show()
+
     print(i)
     return line,
- 
+
 RADIANS = 0
 DEGREES = 1
 
-l1 = 100 #Length of link 1
-l2 = 100 #length of link 2
+l1 = 10 #Length of link 1
+l2 = 10 #length of link 2
 
 #IK for just the 2 links
 def invkin2(x, y, angleMode=DEGREES):
@@ -70,7 +70,7 @@ def invkin2(x, y, angleMode=DEGREES):
     term1 = ((1 - term2**2)**0.5)*-1
     #calculate th2
     th2 = math.atan2(term1, term2)
-    #optional line. Comment this one out if you 
+    #optional line. Comment this one out if you
     #notice any problems
     th2 = -1*th2
 
@@ -103,23 +103,23 @@ def plot_arm(th1, th2, x, y):
     #print([0, x_j, x], [0, y_j, y])
     #plt.plot([0, x_j, x], [0, y_j, y])
     #plt.show()
-    plt.plot([0, x_j, x], [0, y_j, y], hold='on')
+    plt.plot([0, x_j, x], [0, y_j, y])
     #plt.plot([0, 100, 100], [0, 0, 100])
     #plt.show()
 
 if __name__ == "__main__":
-    print(invkin2(20, 100, DEGREES))
+    print(invkin2(0, 0, DEGREES))
 
-    animateFlag = True
     numFrames = 100
-    if (animateFlag):
-        for i in np.linspace(0, numFrames, numFrames+1):
-            [th1, th2, xj, yj] = invkin2(i, 100, DEGREES)
-            plot_arm(th1, th2, i, 100)
-            
+
+    for i in np.linspace(0, numFrames, numFrames+1):
+        [th1, th2, xj, yj] = invkin2(0, 0, DEGREES)
+        plot_arm(th1, th2, i, 100)
+
         #anim = FuncAnimation(fig, animate, init_func=init,
         #                       frames=200, interval=20, blit=True)
         #anim.save('sine_wave.gif', writer='imagemagick')
         anim = FuncAnimation(fig, animate2, init_func=init,
                              frames=50, interval=100, blit=True)
-        anim.save('arm.gif', writer='imagemagick')
+        # anim.save('arm.gif', writer='imagemagick')
+    plt.show()
