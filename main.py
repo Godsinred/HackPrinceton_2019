@@ -1,4 +1,6 @@
 import os
+
+# this should be the file patht that contains your google cloud credentials
 credential_path = '/Users/jonathan/Desktop/HackPrinceton 2019-20aedb9bf596.json'
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 from google.cloud import speech_v1
@@ -54,31 +56,31 @@ sentence = transcribe_file('/Users/jonathan/Desktop/test.wav')
 
 # X, Y
 letter_coords = {
-    'A' : [(0,0), (0,2), (1,2), (1,1), (0,1), (1,1), (1,0)],
-    'B' : [(0,0), (0,1), (0,2), (1,2), (1,1), (0,1), (1,1), (1,0), (0,0)],
-    'C' : [(1,0), (0,0), (0,1), (0,2), (1,2)],
-    'D' : [(0,0), (0,1), (0,2), (1,2), (1,1), (1,0), (0,0)],
-    'E' : [(1,0), (0,0), (0,1), (0.5,1), (0,1), (0,2), (1,2)],
-    'F' : [(0,0), (0,1), (0.5, 1), (0,1), (0,2), (1,2)],
-    'G' : [(1,2), (0,2), (0,1), (0,0), (1,0), (1,1), (0.5,1)],
-    'H' : [(0,0), (0,2), (0,1), (1,1), (1,2), (1,0)],
-    'I' : [(0,2), (1,2), (0.5,2), (0.5,0), (0,0), (0.5,0), (1,0)],
-    'J' : [(0,2), (1,2), (0.5,2), (0.5,0), (0,0), (0,0.5)],
-    'K' : [(0,2), (0,0), (0,1), (1,2), (0,1), (1,0)],
+    'A' : [(0,0),(0,1),(0,2),(1,2),(1,1),(0,1),(1,1),(1,0)],
+    'B' : [(0,0),(0,1),(0,2),(1,2),(1,1),(0,1),(1,1),(1,0),(0,0),(1,0)],
+    'C' : [(0,0),(1,0),(0,0),(0,2),(1,2)],
+    'D' : [(0,0),(0,2),(1,2),(1,0), (0,0), (1,0)],
+    'E' : [(0,0),(1,0),(0,0),(0,1),(0.5,1),(0,1),(0,2),(1,2)],
+    'F' : [(0,0),(0,1),(0.5,1),(0,1),(0,2),(1,2)],
+    'G' : [(0,0),(1,0),(1,1),(0.5,1),(1,1),(1,0),(0,0),(0,2),(1,2)],
+    'H' : [(0,0),(0,2),(0,1),(1,1),(1,2),(1,0)],
+    'I' : [(0,0),(1,0),(0.5,0),(0.5,2),(0,2),(1,2)],
+    'J' : [(0,0),(0.5,0),(0.5,2),(0,2),(1,2)],
+    'K' : [(0,0),(0,2),(0,1),(1,2),(0,1),(1,0)],
     'L' : [(0,2), (0,0), (1,0)],
     'M' : [(0,0), (0,2), (0.5,1), (1,2), (1,0)],
     'N' : [(0,0), (0,2), (1,0), (1,2)],
-    'O' : [(0,0), (0,2), (1,2), (1,0), (0,0)],
-    'P' : [(0,0), (0,2), (1,2), (1,1), (0,1)],
-    'Q' : [(1,0), (1,2), (0,2), (0,1), (1,1)],
+    'O' : [(0,2), (0,0), (1,0), (1,2), (0,2), (1,2)],
+    'P' : [(0,0), (0,2), (1,2), (1,1), (0,1), (1,1)],
+    'Q' : [(0,1), (0,2), (1,2), (1,0), (1,1), (0,1), (1,1)],
     'R' : [(0,0), (0,2), (1,2), (1,1), (0,1), (1,0)],
-    'S' : [(1,2), (0,2), (0,1), (1,1), (1,0), (0,0)],
-    'T' : [(0,2), (1,2), (0.5,2), (0.5,0)],
+    'S' : [(0,0), (1,0), (1,1), (0,1), (0,2), (1,2)],
+    'T' : [(0,2), (0.5,2), (0.5,0), (0.5,2), (1,2)],
     'U' : [(0,2), (0,0), (1,0), (1,2)],
     'V' : [(0,2), (0.5,0), (1,2)],
     'W' : [(0,2), (0,0), (0.5,1), (1,0), (1,2)],
-    'X' : [(0,2), (1,0), (0.5,1), (1,2), (0.5,1), (0,0)],
-    'Y' : [(0,2), (0.5,1), (1,2), (0.5,1), (0.5,0)],
+    'X' : [(0,2), (0.5,1), (0,0), (1,2), (0.5, 1), (1,0)],
+    'Y' : [(0,2), (0.5,1), (0.5,0), (0.5,1), (1,2)],
     'Z' : [(0,2), (1,2), (0,0), (1,0)]
 }
 # will be a list of all chars, and all chars will be the list of their cords,
@@ -89,6 +91,8 @@ off_set = 10
 def get_coords(sentence, pixel_width=10):
     # x start position of the current letter being executed
     for char_num, letter in enumerate(sentence.upper()):
+        if letter == ' ':
+            continue
         print(letter)
         ### get list of x,y cords for the letter here
         coords = letter_coords[letter]
@@ -125,7 +129,7 @@ letters = all_cords
 numFrames = len(letters)
 
 fig = plt.figure()
-ax = plt.axes(xlim=(-10, 170), ylim=(-100, 50))
+ax = plt.axes(xlim=(-10, 180), ylim=(-100, 50))
 ax.set_title('Drawing arm')
 ax.set_aspect('equal', 'box')
 line, = ax.plot([], [], lw=3)
@@ -220,10 +224,11 @@ def plotDot():
    # rangeVal = int(numFrames/7)*75
 
     for n in range (10):
-        xdot.append(n*15 -2.5)
-        ydot.append(0)
+        for i in range(20):
+            xdot.append(n*20 + 15)
+            ydot.append(i)
 
-    plt.scatter(xdot, ydot, c='w', s=45, zorder = 2)
+    plt.scatter(xdot, ydot, c='w', s=202, zorder = 2)
 
 
 anim = FuncAnimation(fig, animate2, init_func=init,
@@ -240,7 +245,7 @@ import time
 
 # don't forget to change the serial port to suit
 # port number of the arduino
-board = pyfirmata.Arduino(r'/COM7 (Arduino/Genuino Uno)')
+board = pyfirmata.Arduino(r'/dev/cu.usbmodem14601')
 
 # start an iterator thread so
 # serial buffer doesn't overflow
@@ -253,8 +258,11 @@ pin9 = board.get_pin('d:9:s')
 def move_servo(a):
     pin9.write(a)
 
-degrees = [123,345,562,67,2,4657,7,234]
-for deg in degrees:
-    move_servo(deg)
+for deg in angleList:
+    # moves the first servo, but servo gears are stripped
+    print(deg[0])
+    move_servo(deg[0] % 180)
+
+    # would move other servo here, but that srevo doesn't have a input connction
 
 print('end of program')
